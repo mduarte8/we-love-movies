@@ -19,11 +19,18 @@ async function updateReview(reviewId, body) {
   const { score, content } = body;
   const update = await knex("reviews")
     .where({ review_id: reviewId })
-    .update({ score, content });
+    .update({ score, content, updated_at: knex.fn.now() });
   return knex("reviews as r")
     .join("critics as c", "r.critic_id", "=", "c.critic_id")
     .where("r.review_id", reviewId)
-    .select("*", "c.created_at as c_created_at", "c.updated_at as c_updated_at")
+    .select(
+      "r.*",
+      "c.*",
+      "c.created_at as c_created_at",
+      "c.updated_at as c_updated_at",
+      "r.updated_at as updated_at",
+      "r.created_at as created_at"
+    )
     .then((results) => results.map((result) => addCriticReviewConfig(result)));
 }
 

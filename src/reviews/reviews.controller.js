@@ -22,10 +22,15 @@ async function update(req, res) {
   res.json({ data });
 }
 
+async function destroy(req, res) {
+  res.status(204).json({ data: "beeeeeeppppbooooop" });
+}
+
 module.exports = {
   update: [
     asyncErrorBoundary(reviewExists),
     hasProperties("content"),
     asyncErrorBoundary(update),
   ],
+  delete: [asyncErrorBoundary(reviewExists), asyncErrorBoundary(destroy)],
 };
