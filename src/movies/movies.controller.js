@@ -26,8 +26,27 @@ async function list(req, res) {
   });
 }
 
+async function readMovieTheaters(req, res) {
+  const { movieId } = req.params;
+  const data = await service.readMovieTheaters(movieId);
+  res.json({ data });
+}
+
+async function readMovieReviews(req, res) {
+  const { movieId } = req.params;
+  const data = await service.readMovieReviews(movieId);
+  res.json({ data });
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   read: [asyncErrorBoundary(movieExists), asyncErrorBoundary(read)],
-  //   readMovieTheaters: [asyncmovieExists, asyncErrorBoundary]
+  readMovieTheaters: [
+    asyncErrorBoundary(movieExists),
+    asyncErrorBoundary(readMovieTheaters),
+  ],
+  readMovieReviews: [
+    asyncErrorBoundary(movieExists),
+    asyncErrorBoundary(readMovieReviews),
+  ],
 };
