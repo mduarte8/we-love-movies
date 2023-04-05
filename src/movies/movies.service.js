@@ -1,5 +1,6 @@
 const knex = require("../db/connection");
-const mapProperties = require("../utils/map-properties");
+// const mapProperties = require("../utils/map-properties");
+const addCritic = require("../utils/addCritic");
 
 async function list(is_showing) {
   const is_showing_filter = is_showing ? "mt.is_showing" : true;
@@ -32,14 +33,14 @@ async function readMovieTheaters(movieId) {
     .select("*");
 }
 
-const addCritic = mapProperties({
-  critic_id: "critic.critic_id",
-  preferred_name: "critic.preferred_name",
-  surname: "critic.surname",
-  organization_name: "critic.organization_name",
-  created_at: "critic.created_at",
-  updated_at: "critic.updated_at",
-});
+// const addCritic = mapProperties({
+//   critic_id: "critic.critic_id",
+//   preferred_name: "critic.preferred_name",
+//   surname: "critic.surname",
+//   organization_name: "critic.organization_name",
+//   created_at: "critic.created_at",
+//   updated_at: "critic.updated_at",
+// });
 
 async function readMovieReviews(movieId) {
   return knex("reviews as r")
@@ -56,4 +57,5 @@ module.exports = {
   readMovie,
   readMovieTheaters,
   readMovieReviews,
+  addCritic,
 };
