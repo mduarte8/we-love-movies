@@ -23,7 +23,9 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  res.status(204).json({ data: "beeeeeeppppbooooop" });
+  const { reviewId } = req.params;
+  await service.destroyReview(reviewId);
+  res.sendStatus(204);
 }
 
 module.exports = {

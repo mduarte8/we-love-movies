@@ -34,7 +34,12 @@ async function updateReview(reviewId, body) {
     .then((results) => results.map((result) => addCriticReviewConfig(result)));
 }
 
+async function destroyReview(reviewId) {
+  await knex("reviews").where({ review_id: reviewId }).del();
+}
+
 module.exports = {
   readReview,
   updateReview,
+  destroyReview,
 };
